@@ -43,7 +43,7 @@ class GraphBuilder:
             self._role_nodes[depended_role]
         )
 
-def parse_roles(roles_dirs, builder):
+def parse_roles(roles_dirs, builder=GraphBuilder()):
     for roles_dir in roles_dirs:
         for path in glob(join(roles_dir, '*/meta/main.yml')):
             dependent_role = path.split('/')[-3]
@@ -57,12 +57,13 @@ def parse_roles(roles_dirs, builder):
                     builder.add_role(depended_role)
                     builder.link_roles(dependent_role, depended_role)
 
+    return builder.graph
+
 def render_graph(graph, config):
     gv.layout(graph, 'dot')
     gv.render(graph, config.format, config.output)
 
 if __name__ == '__main__':
-    builder = GraphBuilder()
     config = parse_args(sys.argv[1:])
-    parse_roles(config.roles_dirs, builder)
-    render_graph(builder.graph, config)
+    graph = parse_roles(config.roles_dirs)
+    render_graph(graph, config)
