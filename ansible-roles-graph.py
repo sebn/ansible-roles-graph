@@ -28,8 +28,6 @@ def parse_args(args):
 
     return p.parse_args(args)
 
-config = parse_args(sys.argv[1:])
-
 class GraphBuilder:
     def __init__(self):
         self.graph = gv.digraph('roles')
@@ -45,8 +43,6 @@ class GraphBuilder:
             self._role_nodes[depended_role]
         )
 
-builder = GraphBuilder()
-
 def parse_roles(roles_dirs, builder):
     for roles_dir in roles_dirs:
         for path in glob(join(roles_dir, '*/meta/main.yml')):
@@ -61,10 +57,12 @@ def parse_roles(roles_dirs, builder):
                     builder.add_role(depended_role)
                     builder.link_roles(dependent_role, depended_role)
 
-parse_roles(config.roles_dirs, builder)
-
 def render_graph(graph, config):
     gv.layout(graph, 'dot')
     gv.render(graph, config.format, config.output)
 
-render_graph(builder.graph, config)
+if __name__ == '__main__':
+    builder = GraphBuilder()
+    config = parse_args(sys.argv[1:])
+    parse_roles(config.roles_dirs, builder)
+    render_graph(builder.graph, config)
