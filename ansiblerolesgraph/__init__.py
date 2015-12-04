@@ -23,19 +23,29 @@ def parse_args(args):
         'jpg'
         >>> config.roles_dirs
         ['roles/', '../other/roles']
+
+    Provides sane defaults:
+
+        >>> config = parse_args([])
+        >>> config.output
+        'ansible-roles.png'
+        >>> config.format
+        'png'
+        >>> config.roles_dirs
+        ['roles']
     """
     p = ArgumentParser(description='Generate a picture of ansible roles graph.')
 
     p.add_argument('roles_dirs',
                    metavar='ROLES_DIR',
                    type=str,
-                   nargs='+',
-                   default='./roles/',
+                   nargs='*',
+                   default=['roles'],
                    help='a directory containing ansible roles')
 
     p.add_argument('-o', '--output',
                    type=str,
-                   default='./ansible-roles.png',
+                   default='ansible-roles.png',
                    help='the output file')
 
     p.add_argument('-f', '--format',
