@@ -6,6 +6,9 @@ Generate a graph of Ansible role dependencies.
 
     pip install ansible-roles-graph
 
+Assuming you already installed [graphviz](http://www.graphviz.org/)
+with [python bindings](http://www.graphviz.org/content/python-graphviz).
+
 ## Usage
 
 Quite simply:
@@ -26,4 +29,4 @@ See `ansible-roles-graph --help` for more info.
 
 ## License
 
-[GNU GPLv3](https://www.gnu.org/licenses/gpl.html)
+[GNU GPLv3 or later](https://www.gnu.org/licenses/gpl.html)

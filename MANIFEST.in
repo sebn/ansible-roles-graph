@@ -1,0 +1,4 @@
+include COPYING
+include example.png
+include MANIFEST.in
+include README.md

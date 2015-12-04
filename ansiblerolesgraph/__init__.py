@@ -7,6 +7,9 @@ import gv
 from glob import glob
 import yaml
 
+__version__ = '0.1.0'
+__author__  = 'Sebastien Nicouleaud'
+
 def parse_args(args):
     """Parse the command-line arguments and return a config object.
 
@@ -76,7 +79,10 @@ def render_graph(graph, config):
     gv.layout(graph, 'dot')
     gv.render(graph, config.format, config.output)
 
-if __name__ == '__main__':
+def main():
     config = parse_args(sys.argv[1:])
     graph = parse_roles(config.roles_dirs)
     render_graph(graph, config)
+
+if __name__ == '__main__':
+    main()
