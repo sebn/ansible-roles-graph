@@ -39,7 +39,7 @@ class GraphBuilder:
         if role not in self._role_nodes:
             self._role_nodes[role] = gv.node(self.graph, role)
 
-    def link_roles(self, dependent, depended):
+    def link_roles(self, dependent_role, depended_role):
         gv.edge(
             self._role_nodes[dependent_role],
             self._role_nodes[depended_role]
