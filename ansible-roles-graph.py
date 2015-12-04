@@ -1,30 +1,34 @@
 #!/usr/bin/env python
 
+import sys
 from argparse import ArgumentParser
 from os.path import join
 import gv
 from glob import glob
 import yaml
 
-p = ArgumentParser(description='Generate a picture of ansible roles graph.')
+def parse_args(args):
+    p = ArgumentParser(description='Generate a picture of ansible roles graph.')
 
-p.add_argument('roles_dirs',
-               metavar='ROLES_DIR',
-               type=str,
-               nargs='+',
-               default='./roles/',
-               help='a directory containing ansible roles')
+    p.add_argument('roles_dirs',
+                   metavar='ROLES_DIR',
+                   type=str,
+                   nargs='+',
+                   default='./roles/',
+                   help='a directory containing ansible roles')
 
-p.add_argument('-o', '--output',
-               type=str,
-               default='./ansible-roles.png',
-               help='the output file')
+    p.add_argument('-o', '--output',
+                   type=str,
+                   default='./ansible-roles.png',
+                   help='the output file')
 
-p.add_argument('-f', '--format',
-               type=str,
-               default='png')
+    p.add_argument('-f', '--format',
+                   type=str,
+                   default='png')
 
-args = p.parse_args()
+    return p.parse_args(args)
+
+args = parse_args(sys.argv[1:])
 
 class GraphBuilder:
     def __init__(self):
