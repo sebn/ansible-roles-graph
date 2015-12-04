@@ -47,18 +47,21 @@ class GraphBuilder:
 
 builder = GraphBuilder()
 
-for roles_dir in config.roles_dirs:
-    for path in glob(join(roles_dir, '*/meta/main.yml')):
-        dependent_role = path.split('/')[-3]
+def parse_roles(roles_dirs, builder):
+    for roles_dir in roles_dirs:
+        for path in glob(join(roles_dir, '*/meta/main.yml')):
+            dependent_role = path.split('/')[-3]
 
-        builder.add_role(dependent_role)
+            builder.add_role(dependent_role)
 
-        with open(path, 'r') as f:
-            for dependency in yaml.load(f.read())['dependencies']:
-                depended_role = dependency['role']
+            with open(path, 'r') as f:
+                for dependency in yaml.load(f.read())['dependencies']:
+                    depended_role = dependency['role']
 
-                builder.add_role(depended_role)
-                builder.link_roles(dependent_role, depended_role)
+                    builder.add_role(depended_role)
+                    builder.link_roles(dependent_role, depended_role)
+
+parse_roles(config.roles_dirs, builder)
 
 gv.layout(builder.graph, 'dot')
 gv.render(builder.graph, config.format, config.output)
