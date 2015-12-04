@@ -28,17 +28,17 @@ args = p.parse_args()
 
 class GraphBuilder:
     def __init__(self):
-        self.g = gv.digraph('roles')
-        self.role_nodes = {}
+        self.graph = gv.digraph('roles')
+        self._role_nodes = {}
 
     def add_role(self, role):
-        if role not in self.role_nodes:
-            self.role_nodes[role] = gv.node(self.g, role)
+        if role not in self._role_nodes:
+            self._role_nodes[role] = gv.node(self.graph, role)
 
     def link_roles(self, dependent, depended):
         gv.edge(
-            self.role_nodes[dependent_role],
-            self.role_nodes[depended_role]
+            self._role_nodes[dependent_role],
+            self._role_nodes[depended_role]
         )
 
 builder = GraphBuilder()
@@ -56,5 +56,5 @@ for roles_dir in args.roles_dirs:
                 builder.add_role(depended_role)
                 builder.link_roles(dependent_role, depended_role)
 
-gv.layout(builder.g, 'dot')
-gv.render(builder.g, args.format, args.output)
+gv.layout(builder.graph, 'dot')
+gv.render(builder.graph, args.format, args.output)
