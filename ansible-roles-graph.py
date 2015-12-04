@@ -8,6 +8,19 @@ from glob import glob
 import yaml
 
 def parse_args(args):
+    """Parse the command-line arguments and return a config object.
+
+        >>> config = parse_args(['-o', 'schema.jpg',
+        ...                      '-f', 'jpg',
+        ...                      'roles/',
+        ...                      '../other/roles'])
+        >>> config.output
+        'schema.jpg'
+        >>> config.format
+        'jpg'
+        >>> config.roles_dirs
+        ['roles/', '../other/roles']
+    """
     p = ArgumentParser(description='Generate a picture of ansible roles graph.')
 
     p.add_argument('roles_dirs',
