@@ -63,5 +63,8 @@ def parse_roles(roles_dirs, builder):
 
 parse_roles(config.roles_dirs, builder)
 
-gv.layout(builder.graph, 'dot')
-gv.render(builder.graph, config.format, config.output)
+def render_graph(graph, config):
+    gv.layout(graph, 'dot')
+    gv.render(graph, config.format, config.output)
+
+render_graph(builder.graph, config)
